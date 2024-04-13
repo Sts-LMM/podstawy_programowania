@@ -1,3 +1,8 @@
-sentance = input("Write a sentance to cout letters: ")
-lenght_of_sentance = len(sentance)
-print(lenght_of_sentance)
+def lenght_counter(sentance): 
+    return len(sentance)
+
+
+
+
+sentance_to_count = input("Write a sentance to cout letters: ")
+print(lenght_counter(sentance_to_count))
