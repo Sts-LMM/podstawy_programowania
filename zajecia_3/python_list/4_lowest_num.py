@@ -12,4 +12,4 @@ while True:
     except ValueError:
         break
 print(all_nums)
-print('Highest num:', lowest_num_taker(all_nums))
+print('Lowest num:', lowest_num_taker(all_nums))
