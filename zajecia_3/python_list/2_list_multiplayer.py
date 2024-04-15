@@ -12,5 +12,5 @@ while True:
         all_nums.append(num_to_sum)
     except ValueError:
         break
-print(all_nums[:len(all_nums)])
+print(all_nums)
 print('Final:', multiplied_list(all_nums))
