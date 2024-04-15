@@ -1,4 +1,4 @@
-def multiplied_list(all_nums): 
+def biggest_num_taker(all_nums): 
     all_nums.sort()
     final =all_nums[-1]
     return final
@@ -12,4 +12,4 @@ while True:
     except ValueError:
         break
 print(all_nums)
-print('Highiest num:', multiplied_list(all_nums))
+print('Highest num:', biggest_num_taker(all_nums))
