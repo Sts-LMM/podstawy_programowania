@@ -41,44 +41,48 @@ def money_counting(matching_nums):
         return total
 
 def main():
-    print("Lotto ticket probability calculator:")
-    print("How many numbers are on the lotto card:")
-    how_many_nums_in_pool = num_entering(45, 60, [])
-    print("Amount of winning numbers:")
-    how_many_nums_to_win = num_entering(3, 10, [])
-    print("How many coupons do you want to bet:")
-    how_many_bets = num_entering(1, 10, [])
-    print("Do you want to bet numbers yourself (1 YES, 2 NO):")
-    enter_yourself = num_entering(1, 2, [])
-
-    coupon_list = draw(how_many_bets, how_many_nums_to_win, how_many_nums_in_pool, enter_yourself)
-    print("Generated coupons:")
-    for coupon in coupon_list:
-        print(coupon)
-    print("Now the winning numbers are...")
-    winning_numbers = draw(1, how_many_nums_to_win, how_many_nums_in_pool, 2)
-
-    for i in range(how_many_nums_to_win):
-        print(winning_numbers[0][i])
-
-    how_many_matching_nums = []
-    wins = 0
-    for i in range(how_many_bets):
-        matching_nums = 0
-        for coupon_num in coupon_list[i]:
-            if coupon_num in winning_numbers[0]:
-                matching_nums += 1
-        how_many_matching_nums.append(matching_nums)
-        if matching_nums > 0:
-            wins += 1
-            print(f"Coupon {i + 1} matched {matching_nums} numbers. You won {money_counting(matching_nums)}$!")
-
-    if wins == 0:
-        print("No wins this time. Better luck next time!")
-
-    print("Do you want to play again? (1 YES, 2 NO):")
-    play_again = num_entering(1, 2, [])
-    if play_again == 2:
-        return
+    while True:
+        print("Lotto ticket probability calculator:")
+        print("How many numbers are on the lotto card:")
+        how_many_nums_in_pool = num_entering(45, 60, [])
+        print("Amount of winning numbers:")
+        how_many_nums_to_win = num_entering(3, 10, [])
+        print("How many coupons do you want to bet:")
+        how_many_bets = num_entering(1, 10, [])
+        print("Do you want to bet numbers yourself (1 YES, 2 NO):")
+        enter_yourself = num_entering(1, 2, [])
+    
+        coupon_list = draw(how_many_bets, how_many_nums_to_win, how_many_nums_in_pool, enter_yourself)
+        print("Generated coupons:")
+        for coupon in coupon_list:
+            print(coupon)
+        print("Now the winning numbers are...")
+        winning_numbers = draw(1, how_many_nums_to_win, how_many_nums_in_pool, 2)
+    
+        for i in range(how_many_nums_to_win):
+            print(winning_numbers[0][i])
+    
+        how_many_matching_nums = []
+        wins = 0
+        for i in range(how_many_bets):
+            matching_nums = 0
+            for coupon_num in coupon_list[i]:
+                if coupon_num in winning_numbers[0]:
+                    matching_nums += 1
+            how_many_matching_nums.append(matching_nums)
+            if matching_nums > 0:
+                wins += 1
+                print(f"Coupon {i + 1} matched {matching_nums} numbers. You won {money_counting(matching_nums)}$!")
+    
+        if wins == 0:
+            print("No wins this time. Better luck next time!")
+    
+        print("Do you want to play again? (1 YES, 2 NO):")
+        play_again = num_entering(1, 2, [])
+        if play_again == 2:
+            break
+        else:
+            continue
+    
 
 main()
