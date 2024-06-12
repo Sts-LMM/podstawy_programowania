@@ -1,10 +1,12 @@
-import random
+import random #Stanislaw Muter 163065
 
-def num_entering(min_val, max_val):
+def num_entering(min_val, max_val, used_numbers):
     while True:
         try:
-            num = int(input(f"Please enter a number between {min_val} and {max_val}: "))
-            if min_val <= num <= max_val:
+            num = int(input(f"Please enter a number between {min_val} and {max_val} that hasn't been used yet: "))
+            if num in used_numbers:
+                print(f"Number {num} has already been used. Please try again.")
+            elif min_val <= num <= max_val:
                 print(f"Thank you! You entered {num}.")
                 return num
             else:
@@ -16,36 +18,38 @@ def draw(how_many_nums, num_limit, lottery_num_range, enter_yourself):
     all_coupons = [[0] * num_limit for _ in range(how_many_nums)]
     if enter_yourself == 2:
         for i in range(how_many_nums):
-            available_numbers = list(range(1, lottery_num_range + 1))  # List of available numbers
+            available_numbers = list(range(1, lottery_num_range + 1))
             for j in range(num_limit):
-                chosen_num = random.choice(available_numbers)  # Choose a number from available_numbers
+                chosen_num = random.choice(available_numbers)
                 all_coupons[i][j] = chosen_num
-                available_numbers.remove(chosen_num)  # Remove the chosen number from available_numbers
+                available_numbers.remove(chosen_num)
     else:
         for i in range(how_many_nums):
+            used_numbers = []  
             for j in range(num_limit):
-                all_coupons[i][j] = num_entering(1, lottery_num_range)
+                print(f"You are betting on coupon {i}, number {j}:")
+                chosen_num = num_entering(1, lottery_num_range, used_numbers)
+                all_coupons[i][j] = chosen_num
+                used_numbers.append(chosen_num)  
     return all_coupons
 
 def money_counting(matching_nums):
-    if(matching_nums==0):
+    if matching_nums == 0:
         return 0
     else:
-        total = pow(10, matching_nums-1)
+        total = pow(10, matching_nums - 1)
         return total
-    
-gambling = True
-while gambling:
 
+def main():
     print("Lotto ticket probability calculator:")
     print("How many numbers are on the lotto card:")
-    how_many_nums_in_pool = num_entering(45, 60)
+    how_many_nums_in_pool = num_entering(45, 60, [])
     print("Amount of winning numbers:")
-    how_many_nums_to_win = num_entering(3, 10)
+    how_many_nums_to_win = num_entering(3, 10, [])
     print("How many coupons do you want to bet:")
-    how_many_bets = num_entering(1, 10)
+    how_many_bets = num_entering(1, 10, [])
     print("Do you want to bet numbers yourself (1 YES, 2 NO):")
-    enter_yourself = num_entering(1, 2)
+    enter_yourself = num_entering(1, 2, [])
 
     coupon_list = draw(how_many_bets, how_many_nums_to_win, how_many_nums_in_pool, enter_yourself)
     print("Generated coupons:")
@@ -57,31 +61,24 @@ while gambling:
     for i in range(how_many_nums_to_win):
         print(winning_numbers[0][i])
 
-    how_many_matching_nums = []  # Initialize an empty list
+    how_many_matching_nums = []
     wins = 0
     for i in range(how_many_bets):
-        matching_nums = 0  # Initialize matching_nums for each bet
+        matching_nums = 0
         for coupon_num in coupon_list[i]:
             if coupon_num in winning_numbers[0]:
                 matching_nums += 1
-        how_many_matching_nums.append(matching_nums)  # Append the matching numbers for this bet
+        how_many_matching_nums.append(matching_nums)
         if matching_nums > 0:
             wins += 1
+            print(f"Coupon {i + 1} matched {matching_nums} numbers. You won {money_counting(matching_nums)}$!")
 
     if wins == 0:
-        print("You lost all coupons")
-    else:
-        money_won = 0
-        
-        for i in range(how_many_bets):
-            matching_nums = 0  # Initialize matching_nums for each bet
-            for j in range(how_many_nums_to_win):
-                if coupon_list[i][j] in winning_numbers[j]:
-                    matching_nums += 1
-            how_many_matching_nums.append(matching_nums)  # Append the matching numbers for this bet
+        print("No wins this time. Better luck next time!")
 
-        print(f"You won {money_won}$ in total.")
-    print("Want to try again? (1 YES, 2 NO)")
-    keep_gambling = num_entering(1,2)
-    if(keep_gambling == 2):
-        gambling = False
+    print("Do you want to play again? (1 YES, 2 NO):")
+    play_again = num_entering(1, 2, [])
+    if play_again == 2:
+        return
+
+main()
