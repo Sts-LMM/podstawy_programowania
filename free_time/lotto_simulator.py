@@ -27,7 +27,7 @@ def draw(how_many_nums, num_limit, lottery_num_range, enter_yourself):
         for i in range(how_many_nums):
             used_numbers = []  
             for j in range(num_limit):
-                print(f"You are betting on coupon {i}, number {j}:")
+                print(f"You are betting on coupon {i+1}, number {j+1}:")
                 chosen_num = num_entering(1, lottery_num_range, used_numbers)
                 all_coupons[i][j] = chosen_num
                 used_numbers.append(chosen_num)  
